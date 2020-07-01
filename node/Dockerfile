@@ -1,7 +1,9 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 LABEL maintainer "Peter Gusev <peter@remap.ucla.edu>"
+LABEL maintainer "Tyler Liu"
 ARG VERSION_CXX=master
 ARG VERSION_NFD=master
+ARG VERSION_TOOLS=master
 
 # install tools
 RUN  apt-get update \
@@ -34,6 +36,7 @@ RUN git clone --recursive https://github.com/named-data/NFD \
 # install ndn-tools
 RUN git clone --recursive https://github.com/named-data/ndn-tools.git \
     && cd ndn-tools \
+    && git checkout $VERSION_TOOLS \
     && ./waf configure \
     && ./waf \
     && ./waf install \
@@ -49,10 +52,6 @@ RUN cp /usr/local/etc/ndn/nfd.conf.sample /usr/local/etc/ndn/nfd.conf \
 
 RUN mkdir /share \
     && mkdir /logs
-
-# cleanup
-RUN apt autoremove \
-    && apt-get remove -y git build-essential python pkg-config
 
 EXPOSE 6363/tcp
 EXPOSE 6363/udp

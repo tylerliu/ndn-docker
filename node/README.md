@@ -3,15 +3,15 @@
 ## Build Image
 
 ```
-docker build -t hub .
+docker build -t ndn-node .
 ```
 
 ### Build specific release
 
-Pass `VERSION_CXX` and `VERSION_NFD` arguments at build stage:
+Pass `VERSION_CXX`, `VERSION_NFD` and `VERSION_TOOLS` arguments at build stage:
 
 ```
-docker build -t hub-0.6.1 --build-arg VERSION_CXX=ndn-cxx-0.6.1 --build-arg VERSION_NFD=NFD-0.6.1 .
+docker build -t ndn-node-0.7.0 --build-arg VERSION_CXX=ndn-cxx-0.7.0 --build-arg VERSION_NFD=NFD-0.7.0 --build-arg VERSION_TOOLS=ndn-tools-0.7 .
 ```
 
 ## Run Image
@@ -19,14 +19,14 @@ docker build -t hub-0.6.1 --build-arg VERSION_CXX=ndn-cxx-0.6.1 --build-arg VERS
 ### Start as default container
 
 ```
-docker run -d --rm --name hub1 hub
+docker run -d --rm --name node1 ndn-node-0.7.0
 ```
 
 Query status:
 
 ```
-docker exec hub1 nfd --version
-docker exec hub1 nfd-status
+docker exec node1 nfd --version
+docker exec node1 nfd-status
 ```
 
 ### Start container with ports exposing:
